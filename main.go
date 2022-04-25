@@ -2,15 +2,15 @@ package main
 
 import (
 	"project/config"
-	// _authHandler "book/delivery/handler/auth"
+	_authHandler "project/delivery/handler/auth"
 	_userHandler "project/delivery/handler/user"
-	// _authRepository "book/repository/auth"
+	_authRepository "project/repository/auth"
 	_userRepository "project/repository/user"
-	// _authUseCase "book/usecase/auth"
+	_authUseCase "project/usecase/auth"
 	_userUseCase "project/usecase/user"
 
 	// _bookHandler "book/delivery/handler/book"
-	// _middlewares "book/delivery/middlewares"
+	_middlewares "project/delivery/middlewares"
 	// _bookRepository "book/repository/book"
 	// _bookUseCase "book/usecase/book"
 
@@ -21,6 +21,7 @@ import (
 	_utils "project/utils"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
@@ -35,15 +36,15 @@ func main() {
 	// bookUsecase := _bookUseCase.NewBookUseCase(bookRepo)
 	// bookHandler := _bookHandler.NewBookHandler(bookUsecase)
 
-	// authRepo := _authRepository.NewAuthRepository(db)
-	// authUseCase := _authUseCase.NewAuthUseCase(authRepo)
-	// authHandler := _authHandler.NewAuthHandler(authUseCase)
+	authRepo := _authRepository.NewAuthRepository(db)
+	authUseCase := _authUseCase.NewAuthUseCase(authRepo)
+	authHandler := _authHandler.NewAuthHandler(authUseCase)
 	e := echo.New()
-	// e.Pre(middleware.RemoveTrailingSlash())
-	// e.Use(_middlewares.CustomLogger())
+	e.Pre(middleware.RemoveTrailingSlash())
+	e.Use(_middlewares.CustomLogger())
 
 	_routes.RegisterPath(e, userHandler)
-	// _routes.RegisterAuthPath(e, authHandler)
+	_routes.RegisterAuthPath(e, authHandler)
 	log.Fatal(e.Start(fmt.Sprintf(":%d", config.Port)))
 
 }

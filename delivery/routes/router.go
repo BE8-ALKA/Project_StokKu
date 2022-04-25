@@ -1,7 +1,7 @@
 package routes
 
 import (
-	// _authHandler "book/delivery/handler/auth"
+	_authHandler "project/delivery/handler/auth"
 	// _bookHandler "book/delivery/handler/book"
 	_userHandler "project/delivery/handler/user"
 
