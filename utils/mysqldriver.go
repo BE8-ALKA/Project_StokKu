@@ -34,7 +34,7 @@ func InitDB(config *config.AppConfig) *gorm.DB {
 }
 
 func InitialMigration(db *gorm.DB) {
-	// db.AutoMigrate(&entities.Rent{})
+	db.AutoMigrate(&entities.Transaksi{})
 	db.AutoMigrate(&entities.Barang{})
 	db.AutoMigrate(&entities.User{})
 

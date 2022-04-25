@@ -50,7 +50,7 @@ func (br *BarangRepository) CreateBarang(barang _entities.Barang) error {
 
 func (br *BarangRepository) DeleteBarang(id int) error {
 	var barangs _entities.Barang
-	tx := br.database.Where("id = ?", id).Delete(&barangs)
+	tx := br.database.Where("id =? ", id).First(&barangs)
 	if tx.Error != nil {
 		return tx.Error
 	}
