@@ -10,7 +10,7 @@ Salah satu project yang dibuat untuk menyelesaikan course di Alterra Academy htt
 
 ## **ERD PROJECT Stokku**
 
-- ini adalah hasil ERD untuk Project Rent ini.
+- ini adalah hasil ERD untuk Project Stokku ini.
   ![ERD](./hasil/stokku.png)
 
 ## **Getting Started**
