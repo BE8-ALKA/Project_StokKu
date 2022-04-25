@@ -11,7 +11,7 @@ type BarangRepository struct {
 	database *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) *BarangRepository {
+func NewBarangRepository(db *gorm.DB) *BarangRepository {
 	return &BarangRepository{
 		database: db,
 	}

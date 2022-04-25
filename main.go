@@ -9,10 +9,10 @@ import (
 	_authUseCase "project/usecase/auth"
 	_userUseCase "project/usecase/user"
 
-	// _bookHandler "book/delivery/handler/book"
+	_barangHandler "project/delivery/handler/barang"
 	_middlewares "project/delivery/middlewares"
-	// _bookRepository "book/repository/book"
-	// _bookUseCase "book/usecase/book"
+	_barangRepository "project/repository/barang"
+	_barangUseCase "project/usecase/barang"
 
 	"fmt"
 	"log"
@@ -32,9 +32,9 @@ func main() {
 	userUseCase := _userUseCase.NewUserUseCase(userRepo)
 	userHandler := _userHandler.NewUserHandler(userUseCase)
 
-	// bookRepo := _bookRepository.NewBookRepository(db)
-	// bookUsecase := _bookUseCase.NewBookUseCase(bookRepo)
-	// bookHandler := _bookHandler.NewBookHandler(bookUsecase)
+	barangRepo := _barangRepository.NewBarangRepository(db)
+	barangUseCase := _barangUseCase.NewBarangUseCase(barangRepo)
+	barangHandler := _barangHandler.NewBarangHandler(barangUseCase)
 
 	authRepo := _authRepository.NewAuthRepository(db)
 	authUseCase := _authUseCase.NewAuthUseCase(authRepo)
@@ -43,7 +43,7 @@ func main() {
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(_middlewares.CustomLogger())
 
-	_routes.RegisterPath(e, userHandler)
+	_routes.RegisterPath(e, userHandler, barangHandler)
 	_routes.RegisterAuthPath(e, authHandler)
 	log.Fatal(e.Start(fmt.Sprintf(":%d", config.Port)))
 
