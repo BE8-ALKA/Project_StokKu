@@ -14,6 +14,11 @@ import (
 	_barangRepository "project/repository/barang"
 	_barangUseCase "project/usecase/barang"
 
+	_transaksiHandler "project/delivery/handler/transaksi"
+
+	_transaksiRepository "project/repository/transaksi"
+	_transaksiUseCase "project/usecase/transaksi"
+
 	"fmt"
 	"log"
 
@@ -36,6 +41,10 @@ func main() {
 	barangUseCase := _barangUseCase.NewBarangUseCase(barangRepo)
 	barangHandler := _barangHandler.NewBarangHandler(barangUseCase)
 
+	transaksiRepo := _transaksiRepository.NewTransaksiRepository(db)
+	transaksiUseCase := _transaksiUseCase.NewTransaksiUseCase(transaksiRepo)
+	transaksiHandler := _transaksiHandler.NewTransaksiHandler(transaksiUseCase)
+
 	authRepo := _authRepository.NewAuthRepository(db)
 	authUseCase := _authUseCase.NewAuthUseCase(authRepo)
 	authHandler := _authHandler.NewAuthHandler(authUseCase)
@@ -43,7 +52,7 @@ func main() {
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(_middlewares.CustomLogger())
 
-	_routes.RegisterPath(e, userHandler, barangHandler)
+	_routes.RegisterPath(e, userHandler, barangHandler, transaksiHandler)
 	_routes.RegisterAuthPath(e, authHandler)
 	log.Fatal(e.Start(fmt.Sprintf(":%d", config.Port)))
 
