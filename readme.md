@@ -15,8 +15,7 @@ Salah satu project yang dibuat untuk menyelesaikan course di Alterra Academy htt
 
 ## **Getting Started**
 
-- Silahkan sesuaikan data di file `.env`
-- Buka file `MenuUtama.go` di folder `utilities` dan hilangkan tanda `//` untuk auto_migrate pertama kali
+- Buka file `Mysqldriver.go` di folder `utils` dan hilangkan tanda `//` untuk auto_migrate pertama kali
 - Lalu jalankan cmd dengan perintah `go run main.go` atau `go run .`
 
 ## **Hasil Project Stokku**
