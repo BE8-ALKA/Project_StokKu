@@ -42,7 +42,7 @@ func main() {
 	barangHandler := _barangHandler.NewBarangHandler(barangUseCase)
 
 	transaksiRepo := _transaksiRepository.NewTransaksiRepository(db)
-	transaksiUseCase := _transaksiUseCase.NewTransaksiUseCase(transaksiRepo)
+	transaksiUseCase := _transaksiUseCase.NewTransaksiUseCase(transaksiRepo, barangRepo)
 	transaksiHandler := _transaksiHandler.NewTransaksiHandler(transaksiUseCase)
 
 	authRepo := _authRepository.NewAuthRepository(db)

@@ -20,9 +20,9 @@ func (buc *BarangUseCase) GetAll() ([]_entities.Barang, error) {
 	return barangs, err
 }
 
-func (buc *BarangUseCase) GetById(id int) (_entities.Barang, int, error) {
-	barang, rows, err := buc.barangRepository.GetById(id)
-	return barang, rows, err
+func (buc *BarangUseCase) GetById(id int) (_entities.Barang, error) {
+	barang, err := buc.barangRepository.GetById(id)
+	return barang, err
 }
 
 func (buc *BarangUseCase) CreateBarang(barang _entities.Barang) error {
@@ -30,8 +30,8 @@ func (buc *BarangUseCase) CreateBarang(barang _entities.Barang) error {
 	return err
 }
 
-func (buc *BarangUseCase) DeleteBarang(id int) error {
-	err := buc.barangRepository.DeleteBarang(id)
+func (buc *BarangUseCase) DeleteBarang(id, userID int) error {
+	err := buc.barangRepository.DeleteBarang(id, userID)
 	return err
 }
 

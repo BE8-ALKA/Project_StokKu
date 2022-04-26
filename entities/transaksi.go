@@ -5,8 +5,8 @@ import "gorm.io/gorm"
 type Transaksi struct {
 	gorm.Model
 	Id       int    `json:"id"`
-	UserID   int    `json:"userID" form:"userID"`
-	BarangID int    `json:"barangID" form:"barangID"`
+	UserID   uint   `json:"userID" form:"userID"`
+	BarangID uint   `json:"barangID" form:"barangID"`
 	Nama     string `json:"nama" form:"nama"`
 	Barang   string `json:"barang" form:"barang"`
 	Stok     int    `json:"stok" form:"stok"`

@@ -2,16 +2,19 @@ package transaksi
 
 import (
 	_entities "project/entities"
+	_barangRepository "project/repository/barang"
 	_transaksiRepository "project/repository/transaksi"
 )
 
 type TransaksiUseCase struct {
 	transaksiRepository _transaksiRepository.TransaksiRepositoryInterface
+	barangRepository    _barangRepository.BarangRepositoryInterface
 }
 
-func NewTransaksiUseCase(transaksiRepo _transaksiRepository.TransaksiRepositoryInterface) TransaksiUseCaseInterface {
+func NewTransaksiUseCase(transaksiRepo _transaksiRepository.TransaksiRepositoryInterface, barangRepo _barangRepository.BarangRepositoryInterface) TransaksiUseCaseInterface {
 	return &TransaksiUseCase{
 		transaksiRepository: transaksiRepo,
+		barangRepository:    barangRepo,
 	}
 }
 

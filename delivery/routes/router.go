@@ -22,13 +22,13 @@ func RegisterPath(e *echo.Echo, uh *_userHandler.UserHandler, bh *_barangHandler
 	e.PUT("/users/:id", uh.UpdateUser(), _middlewares.JWTMiddleware())
 	e.DELETE("/users/:id", uh.DeleteUser(), _middlewares.JWTMiddleware())
 
-	e.GET("/barangs", bh.GetAllHandler())
+	e.GET("/barangs", bh.GetAllHandler(), _middlewares.JWTMiddleware())
 	e.GET("/barangs/:id", bh.GetByIdHandler(), _middlewares.JWTMiddleware())
 	e.POST("/barangs", bh.CreateBarang(), _middlewares.JWTMiddleware())
 	e.PUT("/barangs/:id", bh.UpdateBarang(), _middlewares.JWTMiddleware())
 	e.DELETE("/barangs/:id", bh.DeleteBarang(), _middlewares.JWTMiddleware())
 
-	e.GET("/transaksis", th.GetAllHandler())
+	e.GET("/transaksis", th.GetAllHandler(), _middlewares.JWTMiddleware())
 	e.GET("/transaksis/:id", th.GetByIdHandler(), _middlewares.JWTMiddleware())
 	e.POST("/transaksis", th.CreateTransaksi(), _middlewares.JWTMiddleware())
 }

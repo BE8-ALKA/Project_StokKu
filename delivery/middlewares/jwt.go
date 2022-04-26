@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -30,12 +29,12 @@ func CreateToken(id int, name string) (string, error) {
 	return token.SignedString([]byte(secret_jwt))
 }
 
-func ExtractToken(c echo.Context) (int, error) {
-	loginToken := c.Get("user").(*jwt.Token)
-	if loginToken.Valid {
-		claims := loginToken.Claims.(jwt.MapClaims)
-		id := int(claims["id"].(float64))
-		return id, nil
+func ExtractToken(c echo.Context) int {
+	user := c.Get("user").(*jwt.Token)
+	if user.Valid {
+		claims := user.Claims.(jwt.MapClaims)
+		userId := int(claims["id"].(float64))
+		return userId
 	}
-	return -1, fmt.Errorf("unauthorized")
+	return 0
 }

@@ -3,6 +3,7 @@ package barang
 import (
 	"net/http"
 	"project/delivery/helper"
+	"project/delivery/middlewares"
 	_entities "project/entities"
 	_barangUseCase "project/usecase/barang"
 	"strconv"
@@ -32,27 +33,22 @@ func (bh *BarangHandler) GetAllHandler() echo.HandlerFunc {
 
 func (bh *BarangHandler) GetByIdHandler() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		idStr := c.Param("id")
-		id, err := strconv.Atoi(idStr)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("id not recognise"))
-		}
-		barangs, rows, err := bh.barangUseCase.GetById(id)
+		var id, _ = strconv.Atoi(c.Param("id"))
+		barangs, err := bh.barangUseCase.GetById(id)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to fetch data"))
 		}
-		if rows == 0 {
-			return c.JSON(http.StatusBadRequest, helper.ResponseFailed("data not found"))
-		}
-		return c.JSON(http.StatusOK, helper.ResponseSuccess("success get all barang", barangs))
+		return c.JSON(http.StatusOK, helper.ResponseSuccess("success get barang by id", barangs))
 	}
 }
 
 func (bh *BarangHandler) CreateBarang() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		var barangs _entities.Barang
-		c.Bind(&barangs)
-		err := bh.barangUseCase.CreateBarang(barangs)
+		var barang _entities.Barang
+		c.Bind(&barang)
+		id := middlewares.ExtractToken(c)
+		barang.UserID = uint(id)
+		err := bh.barangUseCase.CreateBarang(barang)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to create barang"))
 		}
@@ -62,26 +58,24 @@ func (bh *BarangHandler) CreateBarang() echo.HandlerFunc {
 
 func (bh *BarangHandler) DeleteBarang() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		idStr := c.Param("id")
-		id, err := strconv.Atoi(idStr)
+		var id, _ = strconv.Atoi(c.Param("id"))
+		var userID = middlewares.ExtractToken(c)
+
+		err := bh.barangUseCase.DeleteBarang(id, userID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to fetch data"))
 		}
-		err = bh.barangUseCase.DeleteBarang(id)
 		return c.JSON(http.StatusOK, helper.ResponseSuccessWithoutData("success delete barang by id"))
 	}
 }
 
 func (bh *BarangHandler) UpdateBarang() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		idStr := c.Param("id")
-		id, err := strconv.Atoi(idStr)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to fetch data"))
-		}
+		var id, _ = strconv.Atoi(c.Param("id"))
 		var barangs _entities.Barang
 		c.Bind(&barangs)
-		err = bh.barangUseCase.UpdateBarang(id, barangs)
+
+		err := bh.barangUseCase.UpdateBarang(id, barangs)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, helper.ResponseFailed("failed to fetch data"))
 		}
